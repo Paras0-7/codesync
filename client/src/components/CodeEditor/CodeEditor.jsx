@@ -48,6 +48,8 @@ export const CodeEditor = function({socketRef, roomId}){
             if (editorInstance) {
                 editorInstance.toTextArea();
             }
+
+            socketRef.current.off('code_change')
         }
     },[socketRef.current])
     return <textarea id="editor" ref={editorRef}/>

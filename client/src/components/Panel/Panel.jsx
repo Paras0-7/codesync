@@ -1,13 +1,14 @@
 import { useState } from "react"
 import { Client } from "../Client/Client"
 import  './Panel.scss'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import toast from "react-hot-toast"
 
 export const Panel = function({clients}){
 
     
-    const {roomId} = useParams()
+    const {roomId} = useParams();
+    const navigate = useNavigate();
 
     const copyRoomId = async function(){
             try{
@@ -16,6 +17,10 @@ export const Panel = function({clients}){
             }catch(err){
 
             }
+    }
+
+    const leaveRoom = function(){
+        navigate('/')
     }
 
     return <div className="panel">
@@ -35,7 +40,7 @@ export const Panel = function({clients}){
         <div className='actions'>
 
             <button className={`btn copy-btn`} onClick={copyRoomId}>Copy Room ID</button>
-            <button className={`btn leave-btn`}>Leave</button>
+            <button className={`btn leave-btn`} onClick={leaveRoom}>Leave</button>
         </div>
     </div>
 }

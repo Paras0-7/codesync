@@ -57,6 +57,7 @@ export const useSocket = function(){
             socketRef.current?.disconnect();
             socketRef.current?.off('joined')
             socketRef.current?.off('diconnected')
+            
         }
     },[])
 
