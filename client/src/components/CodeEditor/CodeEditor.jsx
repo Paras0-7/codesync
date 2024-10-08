@@ -6,7 +6,7 @@ import 'codemirror/addon/edit/closebrackets'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/javascript/javascript.js'
 
-export const CodeEditor = function({socketRef, roomId}){
+export const CodeEditor = function({socketRef, roomId, onCodeChange}){
 
     const editorRef = useRef(null);
     useEffect(()=>{
@@ -26,6 +26,7 @@ export const CodeEditor = function({socketRef, roomId}){
 
             const {origin} = changes;
             const code = instance.getValue();
+            onCodeChange(code)
             if(origin!== 'setValue'){
                 socketRef.current.emit('code_change', {
                     roomId,

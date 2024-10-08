@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 export const useSocket = function(){
 
     const socketRef = useRef(null);
+    const codeRef = useRef(null)
     const [clients, setClients] = useState([])
     const location = useLocation();
     const {roomId} = useParams();
@@ -15,7 +16,6 @@ export const useSocket = function(){
     useEffect(()=>{
         const init = async function(){
             socketRef.current = await initSocket();
-
             socketRef.current.on('connect_error', (err)=>handleError(err))
             socketRef.current.on('connect_failed', (err)=>handleError(err))
 
@@ -33,6 +33,11 @@ export const useSocket = function(){
                         toast.success(`${userName} joined the room!!`)
                     }
                     setClients(clients)
+
+                    socketRef.current.emit('sync_code', {
+                        code: codeRef.current,
+                        socketId
+                    })
             })
 
 
@@ -64,6 +69,7 @@ export const useSocket = function(){
     return {
         clients,
         socketRef,
-        roomId
+        roomId,
+        codeRef
     }
 }

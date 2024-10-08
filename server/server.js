@@ -41,6 +41,13 @@ io.on('connection', (socket)=>{
         socket.in(roomId).emit('code_change', {code} )
     })
 
+
+    // sync code
+
+    socket.on('sync_code', ({socketId,code})=>{
+        io.to(socketId).emit('code_change', {code})
+    })
+
     // disconnecting
     socket.on('disconnecting', ()=>{
         const rooms = [...socket.rooms]
