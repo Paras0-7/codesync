@@ -1,8 +1,11 @@
 const express = require('express');
 const http = require('http')
+const path = require('path')
 const {Server} = require('socket.io')
 
 const app = express();
+
+app.use(express.static(path.join(__dirname,"public")))
 const server = http.createServer(app);
 
 const io = new Server(server)
@@ -65,8 +68,8 @@ io.on('connection', (socket)=>{
 })
 
 
-app.get('/',(req,res)=>{
-    res.end('Paras')
+app.get('/*', (req,res)=>{
+    res.sendFile(path.join(__dirname,'public','index.html'))
 })
 
 server.listen(8000, ()=>{
