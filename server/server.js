@@ -35,6 +35,12 @@ io.on('connection', (socket)=>{
         })
     })
 
+    // code_change event
+
+    socket.on('code_change', ({roomId,code})=>{
+        socket.in(roomId).emit('code_change', {code} )
+    })
+
     // disconnecting
     socket.on('disconnecting', ()=>{
         const rooms = [...socket.rooms]

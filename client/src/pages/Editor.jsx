@@ -5,10 +5,10 @@ import { useSocket } from "../hooks/useSocket"
 
 export const Editor = function(){   
 
-    const {clients} = useSocket();
+    const {clients, socketRef, roomId} = useSocket();
 
     return <div className="editor-wrapper">
             <Panel clients={clients}/>
-            <CodeEditor/>
+            <CodeEditor socketRef={socketRef} roomId={roomId}/>
     </div>
 }

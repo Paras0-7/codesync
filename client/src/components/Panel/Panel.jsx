@@ -1,9 +1,16 @@
 import { useState } from "react"
 import { Client } from "../Client/Client"
 import  './Panel.scss'
+import { useParams } from "react-router-dom"
 
 export const Panel = function({clients}){
 
+    
+    const {roomId} = useParams()
+
+    const copyRoomId = function(){
+
+    }
     
     return <div className="panel">
         <div>
@@ -21,7 +28,7 @@ export const Panel = function({clients}){
         </div>
         <div className='actions'>
 
-            <button className={`btn copy-btn`}>Copy Room ID</button>
+            <button className={`btn copy-btn`} onClick={copyRoomId}>Copy Room ID</button>
             <button className={`btn leave-btn`}>Leave</button>
         </div>
     </div>

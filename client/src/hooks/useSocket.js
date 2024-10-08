@@ -54,13 +54,15 @@ export const useSocket = function(){
         init();
 
         return ()=>{
-            socketRef.current.disconnect();
-            socketRef.current.off('joined')
-            socketRef.current.off('diconnected')
+            socketRef.current?.disconnect();
+            socketRef.current?.off('joined')
+            socketRef.current?.off('diconnected')
         }
     },[])
 
     return {
-        clients
+        clients,
+        socketRef,
+        roomId
     }
 }
