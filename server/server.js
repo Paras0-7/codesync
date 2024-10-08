@@ -7,8 +7,48 @@ const server = http.createServer(app);
 
 const io = new Server(server)
 
+const userSocketMap = {};
+
+const getAllConnectedClients = (roomId)=>{
+   return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map((socketId)=>{
+        return {
+            socketId,
+            userName: userSocketMap[socketId]
+        }
+   })
+}
+
 io.on('connection', (socket)=>{
-    console.log('Socked Connected', socket.id)
+    // console.log('Socket Connected', socket.id)
+
+
+    socket.on('join', ({roomId, userName})=>{
+        userSocketMap[socket.id] = userName
+        socket.join(roomId);
+        const clients = getAllConnectedClients(roomId);
+        clients.forEach((client)=>{
+            io.to(client.socketId).emit('joined', {
+                clients,
+                userName,
+                socketId: socket.id
+            })
+        })
+    })
+
+    // disconnecting
+    socket.on('disconnecting', ()=>{
+        const rooms = [...socket.rooms]
+
+        rooms.forEach((roomId)=>{
+            socket.in(roomId).emit('disconnected', {
+                socketId: socket.id,
+                userName: userSocketMap[socket.id]
+            })
+        })
+
+        delete userSocketMap[socket.id]
+        socket.leave();
+    })
 })
 
 

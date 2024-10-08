@@ -2,9 +2,9 @@ import { useState } from "react"
 import { Client } from "../Client/Client"
 import  './Panel.scss'
 
-export const Panel = function(){
+export const Panel = function({clients}){
 
-    const [clients, setClients] = useState([{socketId:1, userName: 'Paras Rawat'},{socketId:1, userName: 'Rahul Don'},{socketId:1, userName: 'Paras Rawat'}])
+    
     return <div className="panel">
         <div>
             <div className="img-container">

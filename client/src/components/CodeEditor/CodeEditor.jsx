@@ -22,6 +22,11 @@ export const CodeEditor = function(){
                 lineNumbers:true
             })
 
+        editorInstance.on('change', (instance, changes)=>{
+
+            const {origin} = changes;
+        })    
+
         return ()=>{
             if (editorInstance) {
                 editorInstance.toTextArea();
