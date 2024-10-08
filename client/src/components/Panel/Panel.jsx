@@ -2,16 +2,22 @@ import { useState } from "react"
 import { Client } from "../Client/Client"
 import  './Panel.scss'
 import { useParams } from "react-router-dom"
+import toast from "react-hot-toast"
 
 export const Panel = function({clients}){
 
     
     const {roomId} = useParams()
 
-    const copyRoomId = function(){
+    const copyRoomId = async function(){
+            try{
+                await navigator.clipboard.writeText(roomId)
+                toast.success('Room Id Copied!!')
+            }catch(err){
 
+            }
     }
-    
+
     return <div className="panel">
         <div>
             <div className="img-container">
